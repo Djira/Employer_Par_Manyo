@@ -3,7 +3,7 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.all
+    @tasks = Task.all.order(created_at: :desc).page(params[:page]).per(10)
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -22,38 +22,26 @@ class TasksController < ApplicationController
   # POST /tasks or /tasks.json
   def create
     @task = Task.new(task_params)
-
-    respond_to do |format|
-      if @task.save
-        format.html { redirect_to @task, notice: "Task was successfully created." }
-        format.json { render :show, status: :created, location: @task }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+    if @task.save
+      redirect_to @task, notice: "La tâche a été créee avec succès"
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
-    respond_to do |format|
-      if @task.update(task_params)
-        format.html { redirect_to @task, notice: "Task was successfully updated." }
-        format.json { render :show, status: :ok, location: @task }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+    if @task.update(task_params)
+      redirect_to tasks_path, notice: "La tâche a été mis à jour avec succès" 
+    else
+      render :edit
     end
   end
 
   # DELETE /tasks/1 or /tasks/1.json
   def destroy
     @task.destroy
-    respond_to do |format|
-      format.html { redirect_to tasks_url, notice: "Task was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to tasks_url, notice: "La tâche a été supprimé avec succès"
   end
 
   private
