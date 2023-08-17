@@ -20,7 +20,7 @@ class UsersController < ApplicationController
 
     if @user.save
       log_in(@user)
-      redirect_to tasks_path, notice: 'アカウントを登録しました'
+      redirect_to tasks_path, notice: 'Compte enregistré.'
     else
       render :new
     end
@@ -28,7 +28,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to @user, notice: 'アカウントを更新しました'
+      redirect_to @user, notice: 'Compte mis à jour.'
     else
       render :edit
     end

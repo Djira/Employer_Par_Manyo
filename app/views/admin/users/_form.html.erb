@@ -1,7 +1,7 @@
 <%= form_with(model: user, url: user_form_url, local: true) do |form| %>
   <% if user.errors.any? %>
     <div id="error_explanation">
-      <h2><%= user.errors.count %>件のエラーがあります</h2>
+      <h2><%= user.errors.count %>Il y a des erreurs dans l'affaire</h2>
 
       <ul>
         <% user.errors.full_messages.each do |message| %>
